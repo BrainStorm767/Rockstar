@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <title>Your Cart - Rockstar</title>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header>
+
+  <div class="logo">ROCKSTAR CART</div>
+
+  <div class="button-group">
+
+    <a href="/"><button>Home</button></a>
+    <a href="/logout"><button>Logout</button></a>
+
+  </div>
+
+</header>
+
+<!-- TITLE -->
+<h1 style="text-align:center;margin:25px;">
+  Your Shopping Cart
+</h1>
+
+<!-- CART ITEMS -->
+<section class="products">
+
+  {% if cart_products|length == 0 %}
+
+    <div style="text-align:center;width:100%;">
+      <h2 style="opacity:0.6;">Your cart is empty</h2>
+    </div>
+
+  {% endif %}
+
+  {% for product in cart_products %}
+
+  <div class="card">
+
+    <img src="{{ product.image }}">
+
+    <div class="card-content">
+
+      <h2>{{ product.name }}</h2>
+
+      <div class="price">{{ product.price }}</div>
+
+      <!-- ACTION BUTTONS -->
+      <div class="button-group">
+
+        <a href="/product/{{ product.id }}">
+          <button>View</button>
+        </a>
+
+        <a href="/remove-from-cart/{{ product.id }}">
+          <button style="background:#ff3b3b;color:white;">
+            Remove
+          </button>
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  {% endfor %}
+
+</section>
+
+<!-- TOTAL SECTION -->
+<div class="cart-total-section">
+
+  <h2>Total: ${{ total }}</h2>
+
+  <div class="button-group" style="justify-content:center;">
+
+    <a href="/checkout">
+      <button style="background:linear-gradient(90deg,#00e5ff,#7c4dff);color:white;">
+        Pay Now / Save Order
+      </button>
+    </a>
+
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+
+  © 2026 Rockstar. All Rights Reserved.
+
+</footer>
+
+</body>
+</html>

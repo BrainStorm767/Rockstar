@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>ROCKSTAR SIGNUP</title>
+
+<link rel="stylesheet"
+      href="/static/style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet">
+
+</head>
+
+<body class="login-body">
+
+<div class="login-bg"></div>
+
+<div class="login-container">
+
+    <div class="login-logo-box">
+
+        <div class="login-logo-glow"></div>
+
+        <div class="login-title">
+            ROCKSTAR
+        </div>
+
+        <div class="login-sub">
+            CREATE ACCOUNT
+        </div>
+
+    </div>
+
+    <form
+        action="/signup-action"
+        method="POST"
+        class="login-form">
+
+        <input
+            type="text"
+            name="username"
+            placeholder="Username"
+            class="login-input"
+            required>
+
+        <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            class="login-input"
+            required>
+
+        <button class="login-btn">
+
+            Create Account
+
+        </button>
+
+    </form>
+
+    <div class="switch-auth">
+
+        Already have an account?
+
+        <a href="/login">
+
+            Login
+
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

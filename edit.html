@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="/static/style.css">
+<title>Edit Product</title>
+</head>
+
+<body>
+
+<div class="form-box">
+
+  <h2>Edit Product</h2>
+
+  <form method="POST" enctype="multipart/form-data">
+
+    <input type="text" name="name" value="{{ product.name }}" required>
+
+    <input type="text" name="price" value="{{ product.price }}" required>
+
+    <input type="file" name="image">
+
+    <button type="submit">Update Product</button>
+
+  </form>
+
+</div>
+
+</body>
+</html>

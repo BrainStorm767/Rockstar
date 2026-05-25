@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ROCKSTAR ADMIN</title>
+
+<link rel="stylesheet" href="/static/style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+</head>
+
+<body class="admin-body">
+
+<!-- BACKGROUND -->
+
+<div class="admin-bg"></div>
+
+<!-- ================= HEADER ================= -->
+
+<header class="admin-header">
+
+    <div class="admin-brand-wrap">
+
+        <div class="admin-logo"></div>
+
+        <div>
+
+            <div class="admin-brand">
+                ROCKSTAR
+            </div>
+
+            <div class="admin-sub">
+                ADMIN DASHBOARD
+            </div>
+
+        </div>
+
+    </div>
+
+    <a href="/">
+        <button class="admin-home-btn">
+            Back To Store
+        </button>
+    </a>
+
+</header>
+
+<!-- ================= DASHBOARD ================= -->
+
+<section class="dashboard">
+
+    <!-- LEFT SIDE -->
+
+    <div class="dashboard-left">
+
+        <div class="dashboard-card">
+
+            <div class="card-mini">
+                PRODUCT CONTROL
+            </div>
+
+            <h2 class="dashboard-title">
+                Add New Product
+            </h2>
+
+            <form
+                action="/add"
+                method="POST"
+                enctype="multipart/form-data">
+
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="Product Name"
+                    class="admin-input"
+                    required>
+
+                <input
+                    type="number"
+                    name="price"
+                    placeholder="Price"
+                    class="admin-input"
+                    required>
+
+                <input
+                    type="file"
+                    name="image"
+                    class="admin-file"
+                    required>
+
+                <textarea
+                    name="description"
+                    placeholder="Write luxury product description..."
+                    class="admin-textarea"
+                    required></textarea>
+
+                <button class="publish-btn">
+                    Publish Product
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- RIGHT SIDE -->
+
+    <div class="dashboard-right">
+
+        <div class="dashboard-card">
+
+            <div class="card-mini">
+                INVENTORY
+            </div>
+
+            <h2 class="dashboard-title">
+                Product Management
+            </h2>
+
+            <div class="admin-products">
+
+                {% for p in products %}
+
+                <div class="admin-product-card">
+
+                    <!-- IMAGE -->
+
+                    <img
+                        src="{{ p.image }}"
+                        class="admin-product-image">
+
+                    <!-- INFO -->
+
+                    <div class="admin-product-info">
+
+                        <div class="admin-product-name">
+                            {{ p.name }}
+                        </div>
+
+                        <div class="admin-product-price">
+                            ₹{{ p.price }}
+                        </div>
+
+                    </div>
+
+                    <textarea
+                       name="description"
+                       placeholder="Luxury product description..."
+                       class="admin-textarea"
+                       required></textarea>
+
+                    <!-- ACTIONS -->
+
+                    <div class="admin-actions">
+
+                        <!-- EDIT -->
+
+                        <a href="/edit/{{ p.id }}">
+                            <button class="edit-btn">
+                                Edit
+                            </button>
+                        </a>
+
+                        <!-- DELETE -->
+
+                        <button
+                            class="delete-btn"
+                            onclick="openDeleteModal('{{ p.id }}')">
+
+                            Delete
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================= DELETE MODAL ================= -->
+
+<div id="deleteModal" class="delete-modal">
+
+    <div class="delete-box">
+
+        <div class="delete-warning">
+            Delete Product?
+        </div>
+
+        <div class="delete-text">
+            This action cannot be undone.
+        </div>
+
+        <div class="delete-actions">
+
+            <!-- CANCEL -->
+
+            <button
+                class="cancel-delete"
+                onclick="closeDeleteModal()">
+
+                Cancel
+
+            </button>
+
+            <!-- CONFIRM -->
+
+            <a id="deleteLink">
+
+                <button class="confirm-delete">
+
+                    Yes Delete
+
+                </button>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+function openDeleteModal(id){
+
+    document.getElementById("deleteModal").style.display = "flex";
+
+    document.getElementById("deleteLink").href =
+        "/delete/" + id;
+}
+
+function closeDeleteModal(){
+
+    document.getElementById("deleteModal").style.display = "none";
+}
+
+</script>
+
+</body>
+</html>

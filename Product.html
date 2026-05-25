@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>{{ product.name }}</title>
+
+<link rel="stylesheet" href="/static/style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+</head>
+
+<body class="product-page-body">
+
+<div class="product-page-wrap">
+
+    <!-- IMAGE -->
+
+    <div class="product-page-image-area">
+
+        <img
+            src="{{ product.image }}"
+            class="product-page-image">
+
+    </div>
+
+    <!-- INFO -->
+
+    <div class="product-page-info">
+
+        <div class="product-page-mini">
+            PREMIUM COLLECTION
+        </div>
+
+        <h1 class="product-page-title">
+            {{ product.name }}
+        </h1>
+
+        <div class="product-page-price">
+            ₹{{ product.price }}
+        </div>
+
+        <p class="product-page-description">
+            {{ product.description }}
+        </p>
+
+        <a href="/add-to-cart/{{ product.id }}">
+
+            <button class="buy-btn">
+
+                Add To Cart
+
+            </button>
+
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

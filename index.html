@@ -1,0 +1,352 @@
+<!-- ========================= -->
+<!-- templates/index.html -->
+<!-- ========================= -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ROCKSTAR</title>
+
+<link rel="stylesheet" href="/static/style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<!-- BACKGROUND -->
+<div class="bg-glow"></div>
+<canvas id="particles-bg"></canvas>
+
+<!-- OVERLAY -->
+<div id="overlay" class="overlay" onclick="closeMenu()"></div>
+
+<!-- ================= SIDEBAR ================= -->
+
+<div id="sidebar" class="sidebar">
+
+    <div class="sidebar-header">
+
+        <div>
+            <div class="sidebar-logo">ROCKSTAR</div>
+            <div class="sidebar-sub">
+                Luxury Menswear
+            </div>
+        </div>
+
+        <button class="close-menu" onclick="closeMenu()">
+            ✕
+        </button>
+
+    </div>
+
+    <div class="sidebar-links">
+
+        <a href="/">
+            <button class="side-btn active-side">
+                Home
+            </button>
+        </a>
+
+        <a href="/admin">
+            <button class="side-btn">
+                Admin
+            </button>
+        </a>
+
+        {% if session.get("user") %}
+
+        <a href="/cart">
+            <button class="side-btn">
+                Cart
+            </button>
+        </a>
+
+        <a href="/logout">
+            <button class="side-btn logout-btn">
+                Logout
+            </button>
+        </a>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+<!-- ================= HEADER ================= -->
+
+<header class="header">
+
+    <div class="header-left">
+
+        <div class="brand-logo"></div>
+
+        <div>
+
+            <div class="brand-title">
+                ROCKSTAR
+            </div>
+
+            <div class="brand-subtitle">
+                PREMIUM MENSWEAR
+            </div>
+
+        </div>
+
+    </div>
+
+    <button class="menu-btn" onclick="openMenu()">
+        ☰
+    </button>
+
+</header>
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+    <div class="hero-badge">
+        MODERN LUXURY COLLECTION
+    </div>
+
+    <h1 class="hero-title">
+        Premium Fashion For Men
+    </h1>
+
+    <p class="hero-text">
+        Discover elite streetwear, modern essentials,
+        oversized silhouettes, and luxury menswear.
+    </p>
+
+    <!-- SEARCH -->
+    <div class="search-wrapper">
+
+        <div class="search-shell">
+
+            <svg class="search-icon"
+                 xmlns="http://www.w3.org/2000/svg"
+                 fill="none"
+                 viewBox="0 0 24 24"
+                 stroke-width="1.5"
+                 stroke="currentColor">
+
+                <path stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M21 21l-5.2-5.2m2.2-4.8a7 7 0 11-14 0 7 7 0 0114 0z" />
+
+            </svg>
+
+            <input
+                id="searchInput"
+                class="search-input"
+                type="text"
+                placeholder="Search clothing, hoodies, cargos..."
+                autocomplete="off">
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================= PRODUCTS ================= -->
+
+<section class="products-section">
+
+    <div class="section-row">
+
+        <div>
+
+            <div class="section-mini">
+                COLLECTION
+            </div>
+
+            <h2 class="section-title">
+                Featured Products
+            </h2>
+
+        </div>
+
+    </div>
+
+    <div class="products-grid" id="productsGrid">
+
+        {% for p in products %}
+
+        <div class="product-card product-item">
+
+            <div class="product-image-area">
+
+                <img src="{{ p.image }}"
+                     class="product-image">
+
+            </div>
+
+            <div class="product-content">
+
+                <div class="product-name">
+                    {{ p.name }}
+                </div>
+
+                <div class="product-price">
+                    ₹{{ p.price }}
+                </div>
+
+                <<a href="/product/{{ p.id }}">
+                  
+                  <button class="shop-btn">
+                    View Product
+                  </button>
+                </a>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+<!-- ================= SEARCH ================= -->
+
+<script>
+
+const searchInput = document.getElementById("searchInput");
+const items = document.querySelectorAll(".product-item");
+
+searchInput.addEventListener("keyup", () => {
+
+    const value = searchInput.value.toLowerCase();
+
+    items.forEach(item => {
+
+        const text = item.innerText.toLowerCase();
+
+        if(text.includes(value)){
+            item.style.display = "block";
+        } else {
+            item.style.display = "none";
+        }
+
+    });
+
+});
+
+</script>
+
+<!-- ================= MENU ================= -->
+
+<script>
+
+function openMenu(){
+
+    document.getElementById("sidebar").style.left = "0";
+    document.getElementById("overlay").style.opacity = "1";
+    document.getElementById("overlay").style.pointerEvents = "all";
+}
+
+function closeMenu(){
+
+    document.getElementById("sidebar").style.left = "-340px";
+    document.getElementById("overlay").style.opacity = "0";
+    document.getElementById("overlay").style.pointerEvents = "none";
+}
+
+</script>
+
+<!-- ================= PARTICLES ================= -->
+
+<script>
+
+const canvas = document.getElementById("particles-bg");
+const ctx = canvas.getContext("2d");
+
+canvas.width = innerWidth;
+canvas.height = innerHeight;
+
+let particles = [];
+
+class Particle{
+
+    constructor(){
+
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+
+        this.size = Math.random() * 2;
+
+        this.vx = (Math.random() - 0.5) * 0.3;
+        this.vy = (Math.random() - 0.5) * 0.3;
+    }
+
+    move(){
+
+        this.x += this.vx;
+        this.y += this.vy;
+
+        if(this.x < 0) this.x = canvas.width;
+        if(this.x > canvas.width) this.x = 0;
+
+        if(this.y < 0) this.y = canvas.height;
+        if(this.y > canvas.height) this.y = 0;
+    }
+
+    draw(){
+
+        ctx.fillStyle = "rgba(255,208,0,0.35)";
+
+        ctx.beginPath();
+
+        ctx.arc(
+            this.x,
+            this.y,
+            this.size,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fill();
+    }
+
+}
+
+for(let i=0;i<65;i++){
+    particles.push(new Particle());
+}
+
+function animate(){
+
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    particles.forEach(p => {
+
+        p.move();
+        p.draw();
+
+    });
+
+    requestAnimationFrame(animate);
+}
+
+animate();
+
+window.addEventListener("resize", () => {
+
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
+
+});
+
+</script>
+
+</body>
+</html>
